@@ -43,11 +43,18 @@
 ;; Python
 (require 'python-mode)
 (autoload 'python-mode "python-mode" "Python editing mode." t)
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
+
+;; TODO: Fix Pymacs configuration for OS X
+(unless (eq system-type 'darwin)
+    (progn
+      (autoload 'pymacs-apply "pymacs")
+      (autoload 'pymacs-call "pymacs")
+      (autoload 'pymacs-eval "pymacs" nil t)
+      (autoload 'pymacs-exec "pymacs" nil t)
+      (autoload 'pymacs-load "pymacs" nil t)
+      (print system-type)
+    ))
+
 (setq auto-mode-alist
       (cons '("\\.py$" . python-mode)
             auto-mode-alist))
@@ -78,14 +85,18 @@
              '("\\.py\\'" flymake-pylint-init))
 
 ;; Rope
-(pymacs-load "ropemacs" "rope-")
-(setq ropemacs-enable-autoimport t)
+;; TODO: Fix Rope configuration for OS X
+(unless (eq system-type 'darwin)
+  (pymacs-load "ropemacs" "rope-")
+  (setq ropemacs-enable-autoimport t))
 
 ;; nxhtml
 (load (format "%s/nxhtml/autostart.el" site-elisp))
 
 ;; Elscreen
-(load-library "elscreen")
+;; TODO: Fix Elscreen configuration for OS X
+(unless (eq system-type 'darwin)
+  (load-library "elscreen"))
 
 ;; Yasnippet
 (load-library "yasnippet-0.6.1c/yasnippet")
@@ -95,6 +106,21 @@
                               (auto-fill-mode)
                               (flyspell-mode)
                               (rst-minor-mode)))
+
+;; SuperCollider
+;; TODO: Don't make conditional
+;; TODO: Move to separate .el file
+(if (eq system-type 'darwin)
+    (setq path "/Applications/SuperCollider")(setenv "PATH" path)
+    (push "/Applications/SuperCollider" exec-path)
+    (add-to-list 'load-path "~/.emacs.d/vendor/supercollider/el")
+    (require 'sclang)
+    (custom-set-variables
+     '(sclang-auto-scroll-post-buffer t)
+     '(sclang-eval-line-forward nil)
+     '(sclang-help-path (quote ("/Applications/SuperCollider/Help")))
+     '(sclang-runtime-directory "~/.sclang/")))
+
 
 ;; look and feel
  (require 'color-theme)
