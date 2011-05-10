@@ -111,15 +111,17 @@
 ;; TODO: Don't make conditional
 ;; TODO: Move to separate .el file
 (if (eq system-type 'darwin)
-    (setq path "/Applications/SuperCollider")(setenv "PATH" path)
-    (push "/Applications/SuperCollider" exec-path)
-    (add-to-list 'load-path "~/.emacs.d/vendor/supercollider/el")
-    (require 'sclang)
-    (custom-set-variables
-     '(sclang-auto-scroll-post-buffer t)
-     '(sclang-eval-line-forward nil)
-     '(sclang-help-path (quote ("/Applications/SuperCollider/Help")))
-     '(sclang-runtime-directory "~/.sclang/")))
+    (progn
+      (setq path "/Applications/SuperCollider")
+      (setenv "PATH" path)
+      (push "/Applications/SuperCollider" exec-path)
+      (add-to-list 'load-path "~/.emacs.d/vendor/supercollider/el")
+      (require 'sclang)
+      (custom-set-variables
+       '(sclang-auto-scroll-post-buffer t)
+       '(sclang-eval-line-forward nil)
+       '(sclang-help-path (quote ("/Applications/SuperCollider/Help")))
+       '(sclang-runtime-directory "~/.sclang/"))))
 
 
 ;; look and feel
