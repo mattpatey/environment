@@ -21,6 +21,7 @@
 (put 'upcase-region 'disabled nil)
 (setq-default comint-prompt-read-only t)
 (setq-default indent-tabs-mode nil)
+(setq indent-tabs-mode nil)
 (setq-default inhibit-startup-message t)
 (setq-default next-line-add-newlines nil)
 (setq-default require-final-newline nil)
@@ -122,14 +123,21 @@
       (push "/Applications/SuperCollider" exec-path)
       (require 'sclang)))
 
+;; Markdown mode
+(autoload 'markdown-mode "markdown-mode.el"
+   "Major mode for editing Markdown files" t)
+(setq auto-mode-alist
+   (cons '("\\.text" . markdown-mode) auto-mode-alist))
+
 
 ;; look and feel
  (require 'color-theme)
  (color-theme-initialize)
  (load-library "themes/color-theme-gruber-darker")
+ (require 'color-theme-solarized)
 (if(eq window-system 'x)
     (progn
-      (color-theme-gruber-darker)
+      (color-theme-charcoal-black)
       (scroll-bar-mode nil)
     ))
 
@@ -179,6 +187,6 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (define-key global-map [remap exchange-point-and-mark] 'exchange-point-and-mark-no-activate)
 
 (set-frame-font
- "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+ "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
 (add-to-list 'default-frame-alist
-             '(font . "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"))
+             '(font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
