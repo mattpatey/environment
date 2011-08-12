@@ -11,14 +11,14 @@
 (server-start)
 
 ;; Auto-save
-(defun auto-save-file-name-p (filename)
-  (string-match "^#.*#$" (file-name-nondirectory filename)))
-(defvar autosave-dir
-  (concat "~/tmp/emacs_autosaves/"))
+(defun auto-save-file-name-p
+    (filename)
+    (string-match "^#.*#$" (file-name-nondirectory filename)))
+(defvar autosave-dir "~/tmp/emacs_autosaves/")
 (defun make-auto-save-file-name ()
-  (concat autosave-dir
-          (if buffer-file-name
-              (concat "#" (file-name-nondirectory buffer-file-name) "#")
+    (concat autosave-dir
+        (if buffer-file-name
+            (concat "#" (file-name-nondirectory buffer-file-name) "#")
             (expand-file-name (concat "#%" (buffer-name) "#")))))
 
 ;; Miscellaneous default options
@@ -37,6 +37,7 @@
 (setq-default truncate-lines t)
 (show-paren-mode)
 
+;; TODO: Talk to [ult] about this.
 ;; Ableton
 ;; (load-library "ableton/abl")
 ;; (setq expected-projects-base-path "/home/%s/workspace")
@@ -47,32 +48,47 @@
 (require 'python-mode)
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 
-;; TODO: Fix Pymacs, it stopped working again.
-;;(autoload 'pymacs-apply "pymacs")
-;;(autoload 'pymacs-call "pymacs")
-;;(autoload 'pymacs-eval "pymacs" nil t)
-;;(autoload 'pymacs-exec "pymacs" nil t)
-;;(autoload 'pymacs-load "pymacs" nil t)))
+;; Pymacs (requires the pymacs Python package) and maybe re-compiling
+;; pymacs.el for the system on which pymacs is to be used. Look into a
+;; general solution.
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
 
-(add-hook 'python-mode-hook '(lambda ()
-                               (flymake-mode 1)
-                               (yas/minor-mode 1)
-                               (setq yas/root-directory "~/.emacs.d/elisp/yasnippet-0.6.1c/snippets")
-                               (yas/load-directory yas/root-directory)))
+;; Use Python mode for all .py files
 (setq auto-mode-alist
-      (cons '("\\.py$" . python-mode)
-            auto-mode-alist))
-(setq interpreter-mode-alist (cons '("python" . python-mode)
-                                   interpreter-mode-alist))
+    (cons '("\\.py$" . python-mode)
+        auto-mode-alist))
+(setq interpreter-mode-alist
+    (cons '("python" . python-mode)
+        interpreter-mode-alist))
+
+;; Boiler-plate completion
+(add-hook 'python-mode-hook
+    '(lambda ()
+         (flymake-mode t)
+         (yas/minor-mode t)
+         (setq yas/root-directory
+             (concatenate 'string site-elisp "/yasnippet-0.6.1c/snippets"))
+         (yas/load-directory yas/root-directory)))
+
+;; Use pylint to highlight Python errors and warnings
+;; Depends on 'epylint' being in the path (see pylint).
 (when (load "flymake" t)
-  (defun flymake-pylint-init ()
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-           (local-file (file-relative-name temp-file
-                                           (file-name-directory buffer-file-name))))
-      (list "~/bin/epylint.sh" (list local-file)))))
-(add-to-list 'flymake-allowed-file-name-masks
-             '("\\.py\\'" flymake-pylint-init))
+    (defun flymake-pylint-init ()
+        (let*
+	    ((temp-file
+	        (flymake-init-create-temp-buffer-copy
+	            'flymake-create-temp-inplace))
+                (local-file
+	            (file-relative-name temp-file
+                        (file-name-directory buffer-file-name))))
+        (list "epylint" (list local-file)))))
+(add-to-list
+    'flymake-allowed-file-name-masks
+    '("\\.py\\'" flymake-pylint-init))
 
 ;; Javascript
 (autoload 'js2-mode "js2" nil t)
@@ -80,62 +96,85 @@
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 
 ;; Markdown mode
-(autoload 'markdown-mode "markdown-mode.el"
-  "Major mode for editing Markdown files" t)
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
-      (cons '("\\.text" . markdown-mode) auto-mode-alist))
+    (cons '("\\.text" . markdown-mode)
+        auto-mode-alist))
 
+;; TODO: Fix nxhtml mode.
 ;; nxhtml mode
 ;;(load (format "%s/nxhtml/autostart.el" site-elisp))
 
 ;; org mode
-(add-hook 'org-mode-hook '(lambda()
-                            (auto-fill-mode)
-                            (flyspell-mode)
-                            (rst-minor-mode)))
+(add-hook 'org-mode-hook
+    '(lambda()
+         (auto-fill-mode)
+         (flyspell-mode)
+         (rst-minor-mode)))
 
-;; TODO: When Pymacs is working again re-enable rope.
-;; Rope
-;;(unless (eq system-type 'darwin) ;; TODO: Fix Rope configuration for OS X
-;;  (pymacs-load "ropemacs" "rope-")
-;;  (setq ropemacs-enable-autoimport t))
+;; Ropemacs
+;;
+;; See https://bitbucket.org/agr/ropemacs
+;;
+;; Requires:
+;; Rope (http://pypi.python.org/pypi/rope)
+;; Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
+;; ropemode (https://bitbucket.org/agr/ropemode)
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
+(define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; Shell mode
-(add-hook 'shell-mode-hook '(lambda()
-                              (toggle-truncate-lines t)
-                              (ansi-color-for-comint-mode-on)))
+(add-hook 'shell-mode-hook
+    '(lambda()
+         (toggle-truncate-lines t)
+         (ansi-color-for-comint-mode-on)))
 
-;; SuperCollider
-(if (eq system-type 'darwin) ;; TODO: why did I make this platform dependent?
+;; SuperCollider (configured specifically for OS X, hence the
+;; conditional)
+(if (eq system-type 'darwin)
     (progn
-      (custom-set-variables
-       '(sclang-auto-scroll-post-buffer t)
-       '(sclang-eval-line-forward nil)
-       '(sclang-help-path (quote ("/Applications/SuperCollider/Help")))
-       '(sclang-runtime-directory "~/.sclang/"))
-      (add-to-list 'load-path "~/.emacs.d/vendor/supercollider/el")
-      (setq path "/Applications/SuperCollider")(setenv "PATH" path)
-      (push "/Applications/SuperCollider" exec-path)
-      (require 'sclang)))
+        (custom-set-variables
+            '(sclang-auto-scroll-post-buffer t)
+            '(sclang-eval-line-forward nil)
+            '(sclang-help-path
+                 (quote ("/Applications/SuperCollider/Help")))
+            '(sclang-runtime-directory "~/.sclang/"))
+        (add-to-list 'load-path
+            "~/.emacs.d/vendor/supercollider/el")
+        (setq path "/Applications/SuperCollider")
+        (setenv "PATH" path)
+        (push "/Applications/SuperCollider" exec-path)
+        (require 'sclang)))
 
 ;; Yasnippet
 (load-library "yasnippet-0.6.1c/yasnippet")
 
 ;; look and feel
 (set-frame-font
- "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
+    "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
 (add-to-list 'default-frame-alist
-             '(font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
-(require 'color-theme)
-(require 'color-theme-solarized)
-(color-theme-initialize)
-(color-theme-solarized-light)
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+    '(font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
 
-;; Key bindings
-(define-key global-map [(meta .)] 'rope-goto-definition)
+(require 'color-theme)
+(color-theme-initialize)
+(if (fboundp 'scroll-bar-mode)
+    ;; Assume we are in a windowed environment.
+    ;; TODO: Is there a better way to determine whether we are in a
+    ;; console?
+    (progn
+        (scroll-bar-mode nil)
+        (require 'color-theme-solarized)
+        (color-theme-solarized-light))
+    (color-theme-gruber-darker))
+;; For whatever reason tool-bar-mode in OS X is only de-activated when
+;; passing -1, not nil.
+(if (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+(if (fboundp 'menu-bar-mode)
+    (menu-bar-mode nil))
+
+;; Generic key bindings
 (windmove-default-keybindings 'meta)
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 (global-set-key "\C-c\C-m" 'execute-extended-command)
@@ -149,7 +188,7 @@
 This is the same as using \\[set-mark-command] with the prefix
 argument."
   (interactive)
-  (set-mark-command 1))
+  (set-mark-command t))
 (global-set-key (kbd "M-`") 'jump-to-mark)
 
 (defun exchange-point-and-mark-no-activate ()
@@ -158,4 +197,6 @@ the region."
   (interactive)
   (exchange-point-and-mark)
   (deactivate-mark nil))
-(define-key global-map [remap exchange-point-and-mark] 'exchange-point-and-mark-no-activate)
+(define-key global-map
+    [remap exchange-point-and-mark]
+    'exchange-point-and-mark-no-activate)
