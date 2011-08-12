@@ -46,13 +46,14 @@
 ;; Python
 (require 'python-mode)
 (autoload 'python-mode "python-mode" "Python editing mode." t)
-(unless (eq system-type 'darwin) ;; TODO: Fix Pymacs for OS X
-  (progn
-    (autoload 'pymacs-apply "pymacs")
-    (autoload 'pymacs-call "pymacs")
-    (autoload 'pymacs-eval "pymacs" nil t)
-    (autoload 'pymacs-exec "pymacs" nil t)
-    (autoload 'pymacs-load "pymacs" nil t)))
+
+;; TODO: Fix Pymacs, it stopped working again.
+;;(autoload 'pymacs-apply "pymacs")
+;;(autoload 'pymacs-call "pymacs")
+;;(autoload 'pymacs-eval "pymacs" nil t)
+;;(autoload 'pymacs-exec "pymacs" nil t)
+;;(autoload 'pymacs-load "pymacs" nil t)))
+
 (add-hook 'python-mode-hook '(lambda ()
                                (flymake-mode 1)
                                (yas/minor-mode 1)
@@ -93,10 +94,11 @@
                             (flyspell-mode)
                             (rst-minor-mode)))
 
+;; TODO: When Pymacs is working again re-enable rope.
 ;; Rope
-(unless (eq system-type 'darwin) ;; TODO: Fix Rope configuration for OS X
-  (pymacs-load "ropemacs" "rope-")
-  (setq ropemacs-enable-autoimport t))
+;;(unless (eq system-type 'darwin) ;; TODO: Fix Rope configuration for OS X
+;;  (pymacs-load "ropemacs" "rope-")
+;;  (setq ropemacs-enable-autoimport t))
 
 ;; Shell mode
 (add-hook 'shell-mode-hook '(lambda()
