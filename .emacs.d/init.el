@@ -47,25 +47,12 @@
 ;; Python
 (require 'python-mode)
 (autoload 'python-mode "python-mode" "Python editing mode." t)
-
-;; Pymacs (requires the pymacs Python package) and maybe re-compiling
-;; pymacs.el for the system on which pymacs is to be used. Look into a
-;; general solution.
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
-
-;; Use Python mode for all .py files
 (setq auto-mode-alist
     (cons '("\\.py$" . python-mode)
         auto-mode-alist))
 (setq interpreter-mode-alist
     (cons '("python" . python-mode)
         interpreter-mode-alist))
-
-;; Boiler-plate completion
 (add-hook 'python-mode-hook
     '(lambda ()
          (flymake-mode t)
@@ -74,7 +61,8 @@
              (concatenate 'string site-elisp "/yasnippet-0.6.1c/snippets"))
          (yas/load-directory yas/root-directory)))
 
-;; Use pylint to highlight Python errors and warnings
+;; Use epylint to highlight Python errors and warnings
+;;
 ;; Depends on 'epylint' being in the path (see pylint).
 (when (load "flymake" t)
     (defun flymake-pylint-init ()
@@ -85,10 +73,39 @@
                 (local-file
 	            (file-relative-name temp-file
                         (file-name-directory buffer-file-name))))
-        (list "epylint" (list local-file)))))
-(add-to-list
-    'flymake-allowed-file-name-masks
-    '("\\.py\\'" flymake-pylint-init))
+        (list "epylint" (list local-file))))
+    (add-to-list
+        'flymake-allowed-file-name-masks
+        '("\\.py\\'" flymake-pylint-init)))
+
+;; Pymacs
+;;
+;; Requires the pymacs Python package.
+;;
+;; See http://pymacs.progiciels-bpi.ca/index.html
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+
+;; Pymacs 0.24b2 is hardcoded to use python2.5 if PYMACS_PYTHON is not
+;; set. The important bit here is to make sure pymacs is actually
+;; installed in whatever version of Python pymacs.el decides to use.
+(setenv "PYMACS_PYTHON" "/usr/bin/python")
+
+;; Ropemacs
+;;
+;; See https://bitbucket.org/agr/ropemacs
+;;
+;; Requires:
+;;
+;;   Rope (http://pypi.python.org/pypi/rope)
+;;   Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
+;;   ropemode (https://bitbucket.org/agr/ropemode)
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+(define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; Javascript
 (autoload 'js2-mode "js2" nil t)
@@ -111,18 +128,6 @@
          (auto-fill-mode)
          (flyspell-mode)
          (rst-minor-mode)))
-
-;; Ropemacs
-;;
-;; See https://bitbucket.org/agr/ropemacs
-;;
-;; Requires:
-;; Rope (http://pypi.python.org/pypi/rope)
-;; Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
-;; ropemode (https://bitbucket.org/agr/ropemode)
-(pymacs-load "ropemacs" "rope-")
-(setq ropemacs-enable-autoimport t)
-(define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; Shell mode
 (add-hook 'shell-mode-hook
