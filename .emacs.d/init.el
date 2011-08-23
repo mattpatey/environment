@@ -32,17 +32,21 @@
 (setq-default indent-tabs-mode nil)
 (setq-default inhibit-startup-message t)
 (setq-default next-line-add-newlines nil)
-(setq-default require-final-newline nil)
-(setq-default scroll-step 1)
+(setq-default require-final-newline t)
+;;(setq-default scroll-step 1)
 (setq-default truncate-lines t)
 (show-paren-mode)
 
-;; TODO: Talk to [ult] about this.
 ;; Ableton
-;; (load-library "ableton/abl")
-;; (setq expected-projects-base-path "/home/%s/workspace")
-;; (setq vem-command "vem_activate")
-;; (setq nose-command "nosetests -s")
+(load-library "abl-mode/abl")
+(require 'abl)
+(setq vem-activate-command "vem_activate %s")
+(setq vems-base-dir "~/.virtualenvs2.5")
+(setq abl-python-executable "python2.5")
+(add-hook 'find-file-hooks 'abl-mode-hook)
+
+(load-library "extended-abl-mode/extended-abl")
+(require 'extended-abl)
 
 ;; Python
 (require 'python-mode)
@@ -61,22 +65,24 @@
              (concatenate 'string site-elisp "/yasnippet-0.6.1c/snippets"))
          (yas/load-directory yas/root-directory)))
 
-;; Use epylint to highlight Python errors and warnings
+;; Use pep8 to get PEP8 violations in a new buffer.
+(custom-set-variables
+  '(py-pychecker-command "pychecker")
+  '(py-pychecker-command-args (quote ("")))
+  '(python-check-command "pychecker"))
+
+;; Use pyflakes to highlight Python errors and warnings
 ;;
-;; Depends on 'epylint' being in the path (see pylint).
-(when (load "flymake" t)
-    (defun flymake-pylint-init ()
-        (let*
-	    ((temp-file
-	        (flymake-init-create-temp-buffer-copy
-	            'flymake-create-temp-inplace))
-                (local-file
-	            (file-relative-name temp-file
-                        (file-name-directory buffer-file-name))))
-        (list "epylint" (list local-file))))
-    (add-to-list
-        'flymake-allowed-file-name-masks
-        '("\\.py\\'" flymake-pylint-init)))
+;; (when (load "flymake" t)
+;;   (defun flymake-pyflakes-init ()
+;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;            (local-file (file-relative-name
+;;                         temp-file
+;;                         (file-name-directory buffer-file-name))))
+;;       (list "pyflakes" (list local-file))))
+;;   (add-to-list 'flymake-allowed-file-name-masks
+;;                '("\\.py\\'" flymake-pyflakes-init)))
 
 ;; Pymacs
 ;;
@@ -108,9 +114,11 @@
 (define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; Javascript
-(autoload 'js2-mode "js2" nil t)
+;;(autoload 'js2-mode "js2" nil t)
+;;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;;(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 
 ;; Markdown mode
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -135,8 +143,7 @@
          (toggle-truncate-lines t)
          (ansi-color-for-comint-mode-on)))
 
-;; SuperCollider (configured specifically for OS X, hence the
-;; conditional)
+;; SuperCollider
 (if (eq system-type 'darwin)
     (progn
         (custom-set-variables
@@ -156,36 +163,37 @@
 (load-library "yasnippet-0.6.1c/yasnippet")
 
 ;; look and feel
-(set-frame-font
-    "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
-(add-to-list 'default-frame-alist
-    '(font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
 
 (require 'color-theme)
 (color-theme-initialize)
-(if (fboundp 'scroll-bar-mode)
-    ;; Assume we are in a windowed environment.
-    ;; TODO: Is there a better way to determine whether we are in a
-    ;; console?
-    (progn
-        (scroll-bar-mode nil)
-        (require 'color-theme-solarized)
-        (color-theme-solarized-light))
-    (color-theme-gruber-darker))
-;; For whatever reason tool-bar-mode in OS X is only de-activated when
-;; passing -1, not nil.
-(if (fboundp 'tool-bar-mode)
-    (tool-bar-mode -1))
-(if (fboundp 'menu-bar-mode)
-    (menu-bar-mode nil))
 
-;; Generic key bindings
+;; Emacs frame is broken on initialization in Xmonad. Apparently one
+;; must put all frame-specific configuration settings for Emacs in
+;; one's .Xresources file to make things look right.
+;;
+;; See
+;; http://www.haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Emacs_mini-buffer_starts_at_wrong_size
+(unless (eq window-system 'x)
+  (set-frame-font "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+  (add-to-list 'default-frame-alist
+    '(font . "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode nil))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode nil)))
+(if (eq window-system nil)
+  (color-theme-gruber-darker)
+  (progn
+    (require 'color-theme-solarized)
+    (color-theme-solarized-light)))
+
+;; Key-bindings.
 (windmove-default-keybindings 'meta)
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-(global-set-key "\C-c\C-m" 'execute-extended-command)
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
+(global-set-key (kbd "C-x C-m") 'execute-extended-command)
+(global-set-key (kbd "C-c C-m") 'execute-extended-command)
+(global-set-key (kbd "C-w") 'backward-kill-word)
+(global-set-key (kbd "C-x C-k") 'kill-region)
+(global-set-key (kbd "C-c C-k") 'kill-region)
+(global-set-key (kbd "C-c r") 'run-current-branch)
 
 ;; Experimental functionality
 (defun jump-to-mark ()

@@ -1,7 +1,7 @@
-Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
-       , bgColor = "black"
-       , fgColor = "grey"
-       , position = BottomW L 100
+Config { font = "xft:Consolas:size=9:antialias=false"
+       , bgColor = "#111111"
+       , fgColor = "#cccccc"
+       , position = BottomW L 95
        , lowerOnStart = True
        , commands = [ Run Weather "EDDB" ["-t"," <tempC>C","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
