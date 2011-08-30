@@ -6,8 +6,8 @@ xrdb -merge .Xresources
 gnome-screensaver
 syndaemon -d -t
 #xsetroot -solid "#636161"
-feh --bg-scale /home/mlp/Pictures/fantasy_art_scenery_wallpaper_sven_sauer_03.jpg &
-
+#feh --bg-scale /home/mlp/Pictures/fantasy_art_scenery_wallpaper_sven_sauer_03.jpg &
+feh --bg-scale /home/mlp/Pictures/fantasy_art_scenery_wallpaper_sergey_musin_01.jpg &
 
 # This must be started before seahorse-daemon.
 eval $(gnome-keyring-daemon)

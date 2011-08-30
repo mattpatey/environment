@@ -141,3 +141,5 @@ function vemfresh()
 
 # Turn off history expansion
 set +H
+
+export PS1="\u@\h# "

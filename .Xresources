@@ -23,9 +23,10 @@ URxvt*color8: #666666
 URxvt*color9: #cf6171
 URxvt*colorUL: #c5f779
 URxvt*cursorColor: magenta
+URxvt.depth: 32
+URxvt*fade: true
 URxvt*font: xft:Consolas:size=9:antialias=true
 URxvt*foreground: Wheat
-URxvt*underlineColor: #c5f779
-URxvt.depth: 32
-URxvt.internalBorder: 0
+URxvt*internalBorder: 10
 URxvt.scrollBar: false
+URxvt*underlineColor: #c5f779
