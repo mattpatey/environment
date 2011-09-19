@@ -26,7 +26,7 @@ seahorse-daemon
 update-notifier --startup-delay=60 &
 xdg-user-dirs-gtk-update
 
-trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --height 17 --transparent true --alpha 0 --tint 0x111111 &
+#trayer --edge bottom --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --height 17 --transparent true --alpha 0 --tint 0x111111 &
 xcompmgr -c -f -D3 &
 
 exec xmonad
