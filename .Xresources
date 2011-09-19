@@ -4,7 +4,7 @@ Emacs.menuBar: off
 Emacs.toolBar: -1
 Emacs.verticalScrollBars: off
 
-URxvt*background: rgba:0000/0000/0000/dddd
+URxvt*background: rgba:0000/0000/0000/ddee
 URxvt*color0: #000000
 URxvt*color10: #c5f779
 URxvt*color11: #fff796
