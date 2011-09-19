@@ -24,7 +24,6 @@
 ;; Miscellaneous default options
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (column-number-mode t)
-(global-hl-line-mode t)
 (put 'upcase-region 'disabled nil)
 (setq grep-find-command "find . -type f '!' -wholename '*/.svn/*' -print0 | xargs -0 -e grep -nH -e ")
 (setq use-file-dialog nil)
@@ -181,10 +180,11 @@
   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (if (fboundp 'menu-bar-mode) (menu-bar-mode nil)))
 (if (eq window-system nil)
-  (color-theme-gruber-darker)
+  (color-theme-calm-forest)
   (progn
     (require 'color-theme-solarized)
-    (color-theme-solarized-light)))
+    (color-theme-solarized-light)
+    (global-hl-line-mode t)))
 
 ;; Key-bindings.
 (windmove-default-keybindings 'meta)
