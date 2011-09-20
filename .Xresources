@@ -30,3 +30,5 @@ URxvt*foreground: Wheat
 URxvt*internalBorder: 10
 URxvt.scrollBar: false
 URxvt*underlineColor: #c5f779
+
+xscreensaver.timeout: 5
