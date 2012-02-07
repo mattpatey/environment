@@ -1,17 +1,24 @@
 import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
-import XMonad.Layout.Tabbed
+import XMonad.Layout.NoBorders
+import XMonad.Layout.ResizableTile
+import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Themes
 import System.IO
 
-mlp_borderWidth = 0
-mlp_focusedBorderColor = "#007777"
-mlp_layoutHook = avoidStruts $ layoutHook defaultConfig ||| tabbed shrinkText (theme kavonForestTheme)
-mlp_manageHook = manageDocks <+> manageHook defaultConfig
+mlp_borderWidth = 1
+mlp_focusedBorderColor = "#ff6666"
+mlp_layoutHook = smartBorders (avoidStruts $ layoutHook defaultConfig ||| ResizableTall 1 (3/100) (1/2) [] )
+mlp_manageHook = composeAll [
+                     className =? "XCalc" --> doFloat
+	             , className =? "Vlc" --> doFloat
+                 ]
+                 <+> manageDocks
+                 <+> manageHook defaultConfig
 mlp_modMask = mod4Mask
-mlp_normalBorderColor = "#ffffff"
+mlp_normalBorderColor = "#555555"
 mlp_terminal = "urxvt"
 
 mlp_PP :: PP
@@ -22,8 +29,8 @@ mlp_PP = defaultPP {
     }
 
 main = do
-    pipe <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"	
-    xmonad =<< xmobar defaultConfig { 
+    pipe <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+    xmonad $ defaultConfig {
         borderWidth = mlp_borderWidth
         , focusedBorderColor = mlp_focusedBorderColor
         , layoutHook = mlp_layoutHook
@@ -32,4 +39,9 @@ main = do
         , modMask = mlp_modMask
         , normalBorderColor = mlp_normalBorderColor
         , terminal = mlp_terminal
-        }
+        } `additionalKeys`
+        [ ((mlp_modMask .|. shiftMask, xK_v), spawn "amixer -c 0 set PCM 2dB-")
+	, ((mlp_modMask .|. shiftMask, xK_b), spawn "amixer -c 0 set PCM 2dB+")
+	, ((mlp_modMask .|. shiftMask, xK_y), sendMessage MirrorShrink)
+	, ((mlp_modMask .|. shiftMask, xK_n), sendMessage MirrorExpand)	
+        ]

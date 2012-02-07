@@ -1,5 +1,6 @@
 ;; Set custom site Elisp location
 (setq site-elisp "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/elisp/share/emacs/site-lisp/mew")
 (add-to-list 'load-path site-elisp)
 
 ;; Keep Emacs custom stuff in its own file
@@ -109,10 +110,10 @@
 ;;   Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
 ;;   ropemode (https://bitbucket.org/agr/ropemode)
 (require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-(define-key global-map [(meta .)] 'rope-goto-definition)
+;;(pymacs-load "ropemacs" "rope-")
+;;(define-key global-map [(meta .)] 'rope-goto-definition)
 
-;; Javascript
+;; javascript
 ;;(autoload 'js2-mode "js2" nil t)
 ;;(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 ;;(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
@@ -180,11 +181,16 @@
   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (if (fboundp 'menu-bar-mode) (menu-bar-mode nil)))
 (if (eq window-system nil)
-  (color-theme-calm-forest)
+  (progn
+    (color-theme-calm-forest)
+    (require 'color-theme-solarized))
   (progn
     (require 'color-theme-solarized)
     (color-theme-solarized-light)
-    (global-hl-line-mode t)))
+    (global-hl-line-mode -1)
+    (blink-cursor-mode -1)))
+
+
 
 ;; Key-bindings.
 (windmove-default-keybindings 'meta)
@@ -213,3 +219,7 @@ the region."
 (define-key global-map
     [remap exchange-point-and-mark]
     'exchange-point-and-mark-no-activate)
+
+(load-library "/home/mlp/.emacs.d/elisp/share/emacs/site-lisp/mew/mew")
+(autoload 'mew "mew" nil t)
+(autoload 'mew-send "mew" nil t)

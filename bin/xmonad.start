@@ -22,6 +22,6 @@ seahorse-daemon
 xdg-user-dirs-gtk-update
 
 xscreensaver -nosplash &
-xcompmgr -c -f -D3 &
+#xcompmgr -c -f -D3 &
 
 exec xmonad
