@@ -1,34 +1,86 @@
+! Terminal colour schemes
+
+! colour scheme: High contrasty
+urxvt.background: #434043
+urxvt.foreground: #DDDDDD
+! black
+urxvt.color0: #353535
+urxvt.color8: #666666
+! red
+urxvt.color1: #D81860
+urxvt.color9: #F00060
+! green
+urxvt.color2: #B7CE42
+urxvt.color10: #BDE077
+! brown/yellow
+urxvt.color3: #FEA63C
+urxvt.color11: #FFE863
+! blue
+urxvt.color4: #6F99B4
+urxvt.color12: #7C96B0
+! magenta
+urxvt.color5: #8B7B8B
+urxvt.color13: #D8BFD8
+! cyan
+urxvt.color6: #A7A15E
+urxvt.color14: #F0E68C
+! white
+urxvt.color7: #DDDDDD
+urxvt.color15: #FFFFFF
+
+! colour scheme: Low contrast
+! urxvt.background: #3A3636
+! urxvt.foreground: #6F6767
+! black
+! urxvt.color0: #363636
+! urxvt.color8: #424242
+! red
+! urxvt.color1: #C37561
+! urxvt.color9: #D19485
+! green
+! urxvt.color2: #A0A57E
+! urxvt.color10: #B6B99D
+! brown/yellow
+! urxvt.color3: #D1A375
+! urxvt.color11: #DEBC9C
+! blue
+! urxvt.color4: #7985A3
+! urxvt.color12: #98A1B9
+! magenta
+! urxvt.color5: #AB716D
+! urxvt.color13: #BE918E
+! cyan
+! urxvt.color6: #98B9B1
+! urxvt.color14: #CBE6CB
+! white
+! urxvt.color7: #D0D0D0
+! urxvt.color15: #E6E6E6
+
+urxvt.internalBorder:       6
+
+! Emacs
 Emacs.font: Consolas-9
 Emacs.fontBackend: xft
 Emacs.menuBar: off
 Emacs.toolBar: -1
 Emacs.verticalScrollBars: off
 
-URxvt*background: rgb:0000/0000/0000
-URxvt*color0: #000000
-URxvt*color10: #c5f779
-URxvt*color11: #fff796
-URxvt*color12: #4186be
-URxvt*color13: #cf9ebe
-URxvt*color14: #71bebe
-URxvt*color15: #ffffff
-URxvt*color1: #9e1828
-URxvt*color2: #aece92
-URxvt*color3: #968a38
-URxvt*color4: #414171
-URxvt*color5: #963c59
-URxvt*color6: #418179
-URxvt*color7: #bebebe
-URxvt*color8: #666666
-URxvt*color9: #cf6171
+! URxvt
 URxvt*colorUL: #c5f779
 URxvt*cursorColor: magenta
-URxvt.depth: 32
 URxvt*fade: true
-URxvt*font: xft:Consolas:size=9:antialias=true
-URxvt*foreground: Wheat
+URxvt*font: xft:Consolas:size=9:antialias=false
 URxvt*internalBorder: 0
-URxvt.scrollBar: false
 URxvt*underlineColor: #c5f779
+URxvt.depth: 32
+URxvt*perl-lib:        /usr/lib/urxvt/perl/
+URxvt*perl-ext-common: default,matcher,searchable-scrollback
+URxvt.saveLines: 2000
+URxvt.scrollBar: false
+URxvt.scrollTtyKeypress: true
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: false
+URxvt*urlLauncher: /usr/bin/google-chrome
 
+! X
 xscreensaver.timeout: 5

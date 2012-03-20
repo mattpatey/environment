@@ -35,6 +35,7 @@
 (setq-default require-final-newline t)
 ;;(setq-default scroll-step 1)
 (setq-default truncate-lines t)
+(setq confirm-kill-emacs 'y-or-n-p)
 (show-paren-mode)
 
 ;; Ableton
@@ -186,7 +187,8 @@
     (require 'color-theme-solarized))
   (progn
     (require 'color-theme-solarized)
-    (color-theme-solarized-light)
+    ;;(color-theme-solarized-light)
+    (color-theme-tango)
     (global-hl-line-mode -1)
     (blink-cursor-mode -1)))
 

@@ -100,6 +100,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
 . virtualenvwrapper.sh
 
 function vem_activate() {
@@ -145,3 +146,8 @@ function vemfresh()
 set +H
 
 export PS1="\u@\h# "
+
+PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
+export PYTHONSTARTUP=~/.pystartup
+
+alias e='emacs -nw'
