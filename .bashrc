@@ -145,7 +145,8 @@ function vemfresh()
 # Turn off history expansion
 set +H
 
-export PS1="\u@\h# "
+source /etc/bash_completion.d/git
+export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
 
 PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
 export PYTHONSTARTUP=~/.pystartup

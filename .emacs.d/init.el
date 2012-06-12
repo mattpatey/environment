@@ -30,6 +30,7 @@
 (setq use-file-dialog nil)
 (setq-default comint-prompt-read-only t)
 (setq-default indent-tabs-mode nil)
+;;(show-ws-toggle-show-tabs)
 (setq-default inhibit-startup-message t)
 (setq-default next-line-add-newlines nil)
 (setq-default require-final-newline t)

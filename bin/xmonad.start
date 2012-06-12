@@ -2,7 +2,7 @@
 
 xrdb -merge .Xresources
 syndaemon -d -t
-feh --bg-scale /home/mlp/Pictures/fantasy_art_scenery_wallpaper_sergey_musin_01.jpg &
+feh --bg-scale /home/mlp/Downloads/cardboardman.png &
 
 # This must be started before seahorse-daemon.
 eval $(gnome-keyring-daemon)
