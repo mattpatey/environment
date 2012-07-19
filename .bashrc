@@ -65,34 +65,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias n='nosetests -vs --nologcapture'
-alias g='git'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -100,8 +72,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-. virtualenvwrapper.sh
+VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2.7
+. /usr/local/bin/virtualenvwrapper.sh
 
 function vem_activate() {
     cmd=`vem activate -q $@`
@@ -146,9 +118,14 @@ function vemfresh()
 set +H
 
 source /etc/bash_completion.d/git
-export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
 
-PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games"
+export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant/bin"
+export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
 export PYTHONSTARTUP=~/.pystartup
 
 alias e='emacs -nw'
+alias ssh='eval $(keychain --eval --agents ssh -Q --quiet --nogui ~/.ssh/id_rsa) && ssh'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'

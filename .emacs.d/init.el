@@ -39,6 +39,9 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 (show-paren-mode)
 
+;; Powerline
+(load-library "powerline")
+
 ;; Ableton
 (load-library "abl-mode/abl")
 (require 'abl)
@@ -61,7 +64,7 @@
         interpreter-mode-alist))
 (add-hook 'python-mode-hook
     '(lambda ()
-         (flymake-mode t)
+         ;;(flymake-mode t)
          (yas/minor-mode t)
          (setq yas/root-directory
              (concatenate 'string site-elisp "/yasnippet-0.6.1c/snippets"))
@@ -75,16 +78,18 @@
 
 ;; Use pyflakes to highlight Python errors and warnings
 ;;
-;; (when (load "flymake" t)
-;;   (defun flymake-pyflakes-init ()
-;;     (let* ((temp-file (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-inplace))
-;;            (local-file (file-relative-name
-;;                         temp-file
-;;                         (file-name-directory buffer-file-name))))
-;;       (list "pyflakes" (list local-file))))
-;;   (add-to-list 'flymake-allowed-file-name-masks
-;;                '("\\.py\\'" flymake-pyflakes-init)))
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "pyflymake.py" (list local-file))))
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
+;;(add-hook 'find-file-hook 'flymake-find-file-hook)
+
 
 ;; Pymacs
 ;;
@@ -112,8 +117,8 @@
 ;;   Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
 ;;   ropemode (https://bitbucket.org/agr/ropemode)
 (require 'pymacs)
-;;(pymacs-load "ropemacs" "rope-")
-;;(define-key global-map [(meta .)] 'rope-goto-definition)
+(pymacs-load "ropemacs" "rope-")
+(define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; javascript
 ;;(autoload 'js2-mode "js2" nil t)
@@ -176,20 +181,17 @@
 ;; See
 ;; http://www.haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Emacs_mini-buffer_starts_at_wrong_size
 (unless (eq window-system 'x)
-  (set-frame-font "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+  (set-frame-font "-*-Inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
   (add-to-list 'default-frame-alist
-    '(font . "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1"))
+    '(font . "-*-Inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
   (if (fboundp 'scroll-bar-mode) (scroll-bar-mode nil))
   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (if (fboundp 'menu-bar-mode) (menu-bar-mode nil)))
 (if (eq window-system nil)
   (progn
-    (color-theme-calm-forest)
-    (require 'color-theme-solarized))
+    (color-theme-calm-forest))
   (progn
-    (require 'color-theme-solarized)
-    ;;(color-theme-solarized-light)
-    (color-theme-tango)
+    (color-theme-calm-forest)
     (global-hl-line-mode -1)
     (blink-cursor-mode -1)))
 
@@ -226,3 +228,9 @@ the region."
 (load-library "/home/mlp/.emacs.d/elisp/share/emacs/site-lisp/mew/mew")
 (autoload 'mew "mew" nil t)
 (autoload 'mew-send "mew" nil t)
+
+(put 'set-goal-column 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+
+'(flymake-errline ((t (:underline "red"))))
+;;'(default ((t (:inherit nil :stipple nil :background "#2e3436" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :family "Inconsolata"))))

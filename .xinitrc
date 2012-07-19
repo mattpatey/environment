@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#
+# ~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+#
+
+xrdb -merge .Xresources
+syndaemon -d -t
+feh --bg-tile /home/mlp/Downloads/fabric_dark.png &
+xscreensaver -nosplash &
+exec xmonad

@@ -38,6 +38,9 @@ myKeys =
       , ((mlp_modMask .|. shiftMask, xK_y), sendMessage MirrorShrink)
       , ((mlp_modMask .|. shiftMask, xK_n), sendMessage MirrorExpand)
       , ((mlp_modMask .|. shiftMask, xK_m), sendMessage Toggle) -- toggle window magnify
+      , ((controlMask .|. shiftMask, xK_e), spawn "/usr/bin/emacs")
+      , ((controlMask .|. shiftMask, xK_f), spawn "/usr/bin/thunar")
+      , ((controlMask .|. shiftMask, xK_g), spawn "/usr/bin/google-chrome")
     ]
     ++
     [((m .|. mlp_modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
