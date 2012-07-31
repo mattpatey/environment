@@ -1,7 +1,8 @@
 ;; Set custom site Elisp location
 (setq site-elisp "~/.emacs.d/elisp")
-(add-to-list 'load-path "~/.emacs.d/elisp/share/emacs/site-lisp/mew")
 (add-to-list 'load-path site-elisp)
+;; (setq color-themes "~/.emacs.d/elisp/themes")
+;; (add-to-list 'load-path color-themes)
 
 ;; Keep Emacs custom stuff in its own file
 (setq custom-file "~/.emacs.d/custom.el")
@@ -41,17 +42,6 @@
 
 ;; Powerline
 (load-library "powerline")
-
-;; Ableton
-(load-library "abl-mode/abl")
-(require 'abl)
-(setq vem-activate-command "vem_activate %s")
-(setq vems-base-dir "~/.virtualenvs2.5")
-(setq abl-python-executable "python2.5")
-(add-hook 'find-file-hooks 'abl-mode-hook)
-
-(load-library "extended-abl-mode/extended-abl")
-(require 'extended-abl)
 
 ;; Python
 (require 'python-mode)
@@ -96,16 +86,16 @@
 ;; Requires the pymacs Python package.
 ;;
 ;; See http://pymacs.progiciels-bpi.ca/index.html
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
+;; (autoload 'pymacs-apply "pymacs")
+;; (autoload 'pymacs-call "pymacs")
+;; (autoload 'pymacs-eval "pymacs" nil t)
+;; (autoload 'pymacs-exec "pymacs" nil t)
+;; (autoload 'pymacs-load "pymacs" nil t)
 
 ;; Pymacs 0.24b2 is hardcoded to use python2.5 if PYMACS_PYTHON is not
 ;; set. The important bit here is to make sure pymacs is actually
 ;; installed in whatever version of Python pymacs.el decides to use.
-(setenv "PYMACS_PYTHON" "/usr/bin/python")
+;; (setenv "PYMACS_PYTHON" "/usr/bin/python")
 
 ;; Ropemacs
 ;;
@@ -116,9 +106,9 @@
 ;;   Rope (http://pypi.python.org/pypi/rope)
 ;;   Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
 ;;   ropemode (https://bitbucket.org/agr/ropemode)
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-(define-key global-map [(meta .)] 'rope-goto-definition)
+;; (require 'pymacs)
+;; (pymacs-load "ropemacs" "rope-")
+;; (define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; javascript
 ;;(autoload 'js2-mode "js2" nil t)
@@ -150,21 +140,21 @@
          (toggle-truncate-lines t)
          (ansi-color-for-comint-mode-on)))
 
-;; SuperCollider
-(if (eq system-type 'darwin)
-    (progn
-        (custom-set-variables
-            '(sclang-auto-scroll-post-buffer t)
-            '(sclang-eval-line-forward nil)
-            '(sclang-help-path
-                 (quote ("/Applications/SuperCollider/Help")))
-            '(sclang-runtime-directory "~/.sclang/"))
-        (add-to-list 'load-path
-            "~/.emacs.d/vendor/supercollider/el")
-        (setq path "/Applications/SuperCollider")
-        (setenv "PATH" path)
-        (push "/Applications/SuperCollider" exec-path)
-        (require 'sclang)))
+;; ;; SuperCollider
+;; (if (eq system-type 'darwin)
+;;     (progn
+;;         (custom-set-variables
+;;             '(sclang-auto-scroll-post-buffer t)
+;;             '(sclang-eval-line-forward nil)
+;;             '(sclang-help-path
+;;                  (quote ("/Applications/SuperCollider/Help")))
+;;             '(sclang-runtime-directory "~/.sclang/"))
+;;         (add-to-list 'load-path
+;;             "~/.emacs.d/vendor/supercollider/el")
+;;         (setq path "/Applications/SuperCollider")
+;;         (setenv "PATH" path)
+;;         (push "/Applications/SuperCollider" exec-path)
+;;         (require 'sclang)))
 
 ;; Yasnippet
 (load-library "yasnippet-0.6.1c/yasnippet")
@@ -191,7 +181,8 @@
   (progn
     (color-theme-calm-forest))
   (progn
-    (color-theme-calm-forest)
+    (require 'color-theme-solarized)
+    (color-theme-solarized-dark)
     (global-hl-line-mode -1)
     (blink-cursor-mode -1)))
 
@@ -224,10 +215,6 @@ the region."
 (define-key global-map
     [remap exchange-point-and-mark]
     'exchange-point-and-mark-no-activate)
-
-(load-library "/home/mlp/.emacs.d/elisp/share/emacs/site-lisp/mew/mew")
-(autoload 'mew "mew" nil t)
-(autoload 'mew-send "mew" nil t)
 
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

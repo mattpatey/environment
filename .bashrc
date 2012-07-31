@@ -117,10 +117,20 @@ function vemfresh()
 # Turn off history expansion
 set +H
 
-source /etc/bash_completion.d/git
+# Git
+GIT_BASH="/etc/bash_completion.d/git"
+if [ -e $GIT_BASH ]; then
+   source $GIT_BASH
+fi
 
-export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant/bin"
-export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
+PROMPT_BASE="\u@\h \W$"
+PROMPT_END="#"
+type -t __git_ps1
+if [ $? == 0 ]; then
+    export PS1="$PROMPT_BASE(__git_ps1 \" <\[\e[1;32m\]%s\[\e[0m\]>\") $PROMPT_END "
+else
+    export PS1="$PROMPT_BASE $PROMPT_END "
+fi
 export PYTHONSTARTUP=~/.pystartup
 
 alias e='emacs -nw'
@@ -129,3 +139,5 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias grep='grep --color=auto'
+
+export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant/bin"
