@@ -69,78 +69,44 @@ esac
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+    source /etc/bash_completion
 fi
 
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-. /usr/bin/virtualenvwrapper.sh
+#===========================================================================
 
-function vem_activate() {
-    cmd=`vem activate -q $@`
-    source $cmd
-}
+if [ -f /usr/bin/virtualenvwrapper.sh ]; then
+    VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+    source /usr/bin/virtualenvwrapper.sh
+fi
 
-_vem_activate()
-{
-    local cur
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    opts=`vem list -q`
-
-    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-    return 0
-}
-complete -F _vem_activate vem_activate
-
-#
-# Activate the virtualenv whose name is the current working directory
-function vemac()
-{
-  deactivate;
-  vename=`pwd | awk -F / "{print \\$NF}"`
-  vem_activate $vename
-}
-
-#
-# Remove, recreate, and activate the virtualenv whose name is the
-# current working directory, then run "python setup.py develop".
-function vemfresh()
-{
-  deactivate;
-  vename=`pwd | awk -F / "{print \\$NF}"`
-  vem remove $vename
-  vem create $vename
-  vem_activate $vename
-  python setup.py develop
-}
+# Git shell completion and convenience functions
+GIT_BASH="/etc/bash_completion.d/git"
+if [ -e $GIT_BASH ]; then
+   source $GIT_BASH
+fi
 
 # Turn off history expansion
 set +H
 
+# Fix terminal for Arch Linux
 case "$TERM" in
     rxvt-unicode-256color)
         TERM=rxvt-unicode
         ;;
 esac
 
-export EDITOR=zile
-export GEM_HOME="/home/mlp/.gem/ruby/1.9.1"
-export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/mlp/.gem/ruby/1.9.1/bin:$HOME/bin"
-export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
-export PYTHONSTARTUP=~/.pystartup
-
-alias e='emacs -nw'
-#alias ssh='eval $(keychain --eval --agents ssh -Q --quiet --nogui ~/.ssh/id_rsa) && ssh'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias grep='grep --color=auto'
-
-source /etc/bash_completion.d/git
+# Set a nice looking prompt
+PROMPT_BASE="\u@\h \W$"
+PROMPT_END="#"
+type -t __git_ps1 > /dev/null
+if [ $? == 0 ]; then
+    export PS1="$PROMPT_BASE(__git_ps1 \" <\[\e[1;32m\]%s\[\e[0m\]>\") $PROMPT_END "
+else
+    export PS1="$PROMPT_BASE $PROMPT_END "
+fi
 
 # Start/Reuse SSH Agent - restart or re-use an existing agent
 SSH_AGENT_CACHE=/tmp/ssh_agent_eval_`whoami`
-
 if [ -s "${SSH_AGENT_CACHE}" ]; then
     echo "Reusing existing ssh-agent"
     eval `cat "${SSH_AGENT_CACHE}"`
@@ -162,3 +128,15 @@ if [ ! -f "${SSH_AGENT_CACHE}" ]; then
     chmod 400 "${SSH_AGENT_CACHE}"
     eval `cat "${SSH_AGENT_CACHE}"`
 fi 
+
+export EDITOR=zile
+export GEM_HOME="/home/mlp/.gem/ruby/1.9.1"
+export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/mlp/.gem/ruby/1.9.1/bin:$HOME/bin"
+export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
+export PYTHONSTARTUP=~/.pystartup
+
+alias e='emacs -nw'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
