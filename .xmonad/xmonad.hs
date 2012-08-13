@@ -4,7 +4,6 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout
 import XMonad.Layout.IndependentScreens
-import XMonad.Layout.Magnifier
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Util.EZConfig(additionalKeys)
@@ -13,8 +12,8 @@ import XMonad.Util.Themes
 import System.IO
 
 mlp_borderWidth = 1
-mlp_focusedBorderColor = "#ff6666"
-mlp_layoutHook = smartBorders (avoidStruts $ magnifier (Tall 1 (3/100) (1/2)) ||| Full )
+mlp_focusedBorderColor = "#333"
+mlp_layoutHook = smartBorders (avoidStruts $ (Tall 1 (3/100) (1/2)) ||| Full )
 mlp_manageHook = composeAll [
                      className =? "XCalc" --> doFloat
 	             , className =? "Vlc" --> doFloat
@@ -37,7 +36,6 @@ myKeys =
       , ((mlp_modMask .|. shiftMask, xK_b), spawn "amixer -c 0 set PCM 2dB+")
       , ((mlp_modMask .|. shiftMask, xK_y), sendMessage MirrorShrink)
       , ((mlp_modMask .|. shiftMask, xK_n), sendMessage MirrorExpand)
-      , ((mlp_modMask .|. shiftMask, xK_m), sendMessage Toggle) -- toggle window magnify
       , ((controlMask .|. shiftMask, xK_e), spawn "/usr/bin/emacs")
       , ((controlMask .|. shiftMask, xK_f), spawn "/usr/bin/thunar")
       , ((controlMask .|. shiftMask, xK_g), spawn "/usr/bin/google-chrome")

@@ -1,6 +1,6 @@
 ;; Set custom site Elisp location
 (setq site-elisp "~/.emacs.d/elisp")
-(add-to-list 'load-path "~/.emacs.d/elisp/share/emacs/site-lisp/mew")
+;; (add-to-list 'load-path "~/.emacs.d/elisp/share/emacs/site-lisp/mew")
 (add-to-list 'load-path site-elisp)
 
 ;; Keep Emacs custom stuff in its own file
@@ -38,20 +38,6 @@
 (setq-default truncate-lines t)
 (setq confirm-kill-emacs 'y-or-n-p)
 (show-paren-mode)
-
-;; Powerline
-(load-library "powerline")
-
-;; Ableton
-(load-library "abl-mode/abl")
-(require 'abl)
-(setq vem-activate-command "vem_activate %s")
-(setq vems-base-dir "~/.virtualenvs2.5")
-(setq abl-python-executable "python2.5")
-(add-hook 'find-file-hooks 'abl-mode-hook)
-
-(load-library "extended-abl-mode/extended-abl")
-(require 'extended-abl)
 
 ;; Python
 (require 'python-mode)
@@ -96,16 +82,16 @@
 ;; Requires the pymacs Python package.
 ;;
 ;; See http://pymacs.progiciels-bpi.ca/index.html
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
+;; (autoload 'pymacs-apply "pymacs")
+;; (autoload 'pymacs-call "pymacs")
+;; (autoload 'pymacs-eval "pymacs" nil t)
+;; (autoload 'pymacs-exec "pymacs" nil t)
+;; (autoload 'pymacs-load "pymacs" nil t)
 
 ;; Pymacs 0.24b2 is hardcoded to use python2.5 if PYMACS_PYTHON is not
 ;; set. The important bit here is to make sure pymacs is actually
 ;; installed in whatever version of Python pymacs.el decides to use.
-(setenv "PYMACS_PYTHON" "/usr/bin/python")
+;; (setenv "PYMACS_PYTHON" "/usr/bin/python")
 
 ;; Ropemacs
 ;;
@@ -116,9 +102,9 @@
 ;;   Rope (http://pypi.python.org/pypi/rope)
 ;;   Pymacs (http://pymacs.progiciels-bpi.ca/index.html)
 ;;   ropemode (https://bitbucket.org/agr/ropemode)
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-(define-key global-map [(meta .)] 'rope-goto-definition)
+;; (require 'pymacs)
+;; (pymacs-load "ropemacs" "rope-")
+;; (define-key global-map [(meta .)] 'rope-goto-definition)
 
 ;; javascript
 ;;(autoload 'js2-mode "js2" nil t)
@@ -173,6 +159,7 @@
 
 (require 'color-theme)
 (color-theme-initialize)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/solarized")
 
 ;; Emacs frame is broken on initialization in Xmonad. Apparently one
 ;; must put all frame-specific configuration settings for Emacs in
@@ -180,18 +167,20 @@
 ;;
 ;; See
 ;; http://www.haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Emacs_mini-buffer_starts_at_wrong_size
+(tool-bar-mode -1)
 (unless (eq window-system 'x)
-  (set-frame-font "-*-Inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+  (set-frame-font "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
   (add-to-list 'default-frame-alist
-    '(font . "-*-Inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
+    '(font . "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
   (if (fboundp 'scroll-bar-mode) (scroll-bar-mode nil))
-  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode nil))
   (if (fboundp 'menu-bar-mode) (menu-bar-mode nil)))
 (if (eq window-system nil)
   (progn
-    (color-theme-calm-forest))
+    (color-theme-sitaramv-solaris))
   (progn
-    (color-theme-calm-forest)
+    (load-theme 'solarized-dark t)
+    (load-library "powerline")
     (global-hl-line-mode -1)
     (blink-cursor-mode -1)))
 
@@ -225,12 +214,13 @@ the region."
     [remap exchange-point-and-mark]
     'exchange-point-and-mark-no-activate)
 
-(load-library "/home/mlp/.emacs.d/elisp/share/emacs/site-lisp/mew/mew")
-(autoload 'mew "mew" nil t)
-(autoload 'mew-send "mew" nil t)
+;; (load-library "/home/mlp/.emacs.d/elisp/share/emacs/site-lisp/mew/mew")
+;; (autoload 'mew "mew" nil t)
+;; (autoload 'mew-send "mew" nil t)
 
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(set-fringe-mode '(0 . 0))
 
 '(flymake-errline ((t (:underline "red"))))
 ;;'(default ((t (:inherit nil :stipple nil :background "#2e3436" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :family "Inconsolata"))))

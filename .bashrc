@@ -72,8 +72,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2.7
-. /usr/local/bin/virtualenvwrapper.sh
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+. /usr/bin/virtualenvwrapper.sh
 
 function vem_activate() {
     cmd=`vem activate -q $@`
@@ -117,15 +117,48 @@ function vemfresh()
 # Turn off history expansion
 set +H
 
-source /etc/bash_completion.d/git
+case "$TERM" in
+    rxvt-unicode-256color)
+        TERM=rxvt-unicode
+        ;;
+esac
 
-export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant/bin"
+export EDITOR=zile
+export GEM_HOME="/home/mlp/.gem/ruby/1.9.1"
+export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/home/mlp/.gem/ruby/1.9.1/bin:$HOME/bin"
 export PS1='\u@\h \W$(__git_ps1 " <\[\e[1;32m\]%s\[\e[0m\]>") # '
 export PYTHONSTARTUP=~/.pystartup
 
 alias e='emacs -nw'
-alias ssh='eval $(keychain --eval --agents ssh -Q --quiet --nogui ~/.ssh/id_rsa) && ssh'
+#alias ssh='eval $(keychain --eval --agents ssh -Q --quiet --nogui ~/.ssh/id_rsa) && ssh'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 alias grep='grep --color=auto'
+
+source /etc/bash_completion.d/git
+
+# Start/Reuse SSH Agent - restart or re-use an existing agent
+SSH_AGENT_CACHE=/tmp/ssh_agent_eval_`whoami`
+
+if [ -s "${SSH_AGENT_CACHE}" ]; then
+    echo "Reusing existing ssh-agent"
+    eval `cat "${SSH_AGENT_CACHE}"`
+    # Check that agent still exists
+    kill -0 "${SSH_AGENT_PID}" 2>-
+    
+    if [ $? -eq 1 ]; then
+        echo "ssh-agent pid ${SSH_AGENT_PID} no longer running"
+        # Looks like the SSH-Agent has died, it'll be restarted below
+        rm -f "${SSH_AGENT_CACHE}"
+    fi
+fi
+
+if [ ! -f "${SSH_AGENT_CACHE}" ]; then
+    echo "Starting new ssh-agent"
+    touch "${SSH_AGENT_CACHE}"
+    chmod 600 "${SSH_AGENT_CACHE}"
+    ssh-agent >> "${SSH_AGENT_CACHE}"
+    chmod 400 "${SSH_AGENT_CACHE}"
+    eval `cat "${SSH_AGENT_CACHE}"`
+fi 

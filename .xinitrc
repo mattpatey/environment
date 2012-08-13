@@ -8,6 +8,6 @@
 
 xrdb -merge .Xresources
 syndaemon -d -t
-feh --bg-tile /home/mlp/Downloads/fabric_dark.png &
+feh --bg-tile ~/wallpaper/arch.png &
 xscreensaver -nosplash &
 exec xmonad

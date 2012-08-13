@@ -1,14 +1,14 @@
 Config {
-    font = "xft:Consolas:size=9:antialias=false"
-    , bgColor = "#111111"
-    , fgColor = "#cccccc"
-    , position = BottomW L 100
+    font = "xft:inconsolata:size=10:antialias=true"
+    , bgColor = "#002b36"
+    , fgColor = "#657b83"
+    , position = Top
     , lowerOnStart = False
     , commands = [
-        Run Date "%a %b %_d %H:%M" "date" 10
+        Run Date "<fc=#93a1a1>%a %b %_d %H:%M</fc>" "date" 10
         , Run StdinReader
         ]
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%StdinReader% }{ <fc=#ee9a00>%date%</fc>"
+    , template = "%StdinReader% }{ %date%"
 }
