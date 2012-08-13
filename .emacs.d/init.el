@@ -1,9 +1,5 @@
 ;; Set custom site Elisp location
 (setq site-elisp "~/.emacs.d/elisp")
-<<<<<<< HEAD
-;; (add-to-list 'load-path "~/.emacs.d/elisp/share/emacs/site-lisp/mew")
-=======
->>>>>>> 21df28c0a038df6e95fc35f1ad36e6e6a1ce15a8
 (add-to-list 'load-path site-elisp)
 ;; (setq color-themes "~/.emacs.d/elisp/themes")
 ;; (add-to-list 'load-path color-themes)
@@ -44,12 +40,9 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 (show-paren-mode)
 
-<<<<<<< HEAD
-=======
 ;; Powerline
 (load-library "powerline")
 
->>>>>>> 21df28c0a038df6e95fc35f1ad36e6e6a1ce15a8
 ;; Python
 (require 'python-mode)
 (autoload 'python-mode "python-mode" "Python editing mode." t)
@@ -190,13 +183,8 @@
   (progn
     (color-theme-sitaramv-solaris))
   (progn
-<<<<<<< HEAD
     (load-theme 'solarized-dark t)
     (load-library "powerline")
-=======
-    (require 'color-theme-solarized)
-    (color-theme-solarized-dark)
->>>>>>> 21df28c0a038df6e95fc35f1ad36e6e6a1ce15a8
     (global-hl-line-mode -1)
     (blink-cursor-mode -1)))
 
@@ -230,13 +218,6 @@ the region."
     [remap exchange-point-and-mark]
     'exchange-point-and-mark-no-activate)
 
-<<<<<<< HEAD
-;; (load-library "/home/mlp/.emacs.d/elisp/share/emacs/site-lisp/mew/mew")
-;; (autoload 'mew "mew" nil t)
-;; (autoload 'mew-send "mew" nil t)
-
-=======
->>>>>>> 21df28c0a038df6e95fc35f1ad36e6e6a1ce15a8
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (set-fringe-mode '(0 . 0))
