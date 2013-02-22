@@ -10,7 +10,7 @@
 
 ;; Start the emacsclient server so other processes can interact with
 ;; my current Emacs instance
-(server-start)
+;;(server-start)
 
 ;; Auto-save
 (defun auto-save-file-name-p
@@ -176,9 +176,9 @@
   (set-frame-font "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
   (add-to-list 'default-frame-alist
     '(font . "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
-  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode nil))
-  (if (fboundp 'tool-bar-mode) (tool-bar-mode nil))
-  (if (fboundp 'menu-bar-mode) (menu-bar-mode nil)))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'menu-bar-mode) (menu-bar-mode -1)))
 (if (eq window-system nil)
   (progn
     (color-theme-sitaramv-solaris))
