@@ -183,7 +183,7 @@
   (progn
     (color-theme-sitaramv-solaris))
   (progn
-    (load-theme 'solarized-dark t)
+    (load-theme 'solarized-light t)
     (load-library "powerline")
     (global-hl-line-mode -1)
     (blink-cursor-mode -1)))
