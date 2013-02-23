@@ -46,7 +46,7 @@ export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
 export PS1="# "
 export PYTHONSTARTUP="$HOME/.pystartup"
 
-alias e='emacs -nw'
+alias e=$EDITOR
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
