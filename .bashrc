@@ -14,7 +14,7 @@ VIRTUALENVWRAPPER_SRC=/usr/local/bin/virtualenvwrapper.sh
 if [ -f $VIRTUALENVWRAPPER_SRC ]; then
     export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
     export WORKON_HOME=$HOME/.virtualenvs
-    export PROJECT_HOME=$HOME/Devel    
+    export PROJECT_HOME=$HOME/workspace
     source $VIRTUALENVWRAPPER_SRC
 fi
 
@@ -44,7 +44,7 @@ fi
 
 export EDITOR="emacs -Q"
 export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/bin"
-export PS1="# "
+export PS1="\u@\h# "
 export PYTHONSTARTUP="$HOME/.pystartup"
 
 alias e=$EDITOR
