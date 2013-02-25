@@ -1,21 +1,22 @@
 [ -z "$PS1" ] && return
 
 HISTCONTROL=ignoredups:ignorespace
-
-shopt -s histappend
-
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-shopt -s checkwinsize
-
-if [ -f /usr/bin/virtualenvwrapper.sh ]; then
-    VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-    source /usr/bin/virtualenvwrapper.sh
-fi
-
 # Turn off history expansion
 set +H
+
+shopt -s histappend
+shopt -s checkwinsize
+
+VIRTUALENVWRAPPER_SRC=/usr/local/bin/virtualenvwrapper.sh
+if [ -f $VIRTUALENVWRAPPER_SRC ]; then
+    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME/Devel    
+    source $VIRTUALENVWRAPPER_SRC
+fi
 
 # Start/Reuse SSH Agent - restart or re-use an existing agent
 SSH_AGENT_CACHE=/tmp/ssh_agent_eval_`whoami`
