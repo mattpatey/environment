@@ -48,9 +48,12 @@ export PS1="\u@\h# "
 export PYTHONSTARTUP="$HOME/.pystartup"
 
 alias e=$EDITOR
+alias g='git'
+alias gc='git commit -av'
+alias gp='git pull'
+alias gpp='git push origin HEAD'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias n='nosetests -s --nologcapture'
 alias grep='grep --color=auto'
-
-source "$HOME/environment/linux"

@@ -81,9 +81,9 @@
 (load-library "yasnippet-0.6.1c/yasnippet")
 
 (require 'color-theme)
-(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/solarized")
-(color-theme-initialize)
-(load-theme 'solarized-light t)
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/themes/solarized")
+;;(color-theme-initialize)
+;;(load-theme 'solarized-light t)
 
 ;; Emacs frame is broken on initialization in Xmonad. Apparently one
 ;; must put all frame-specific configuration settings for Emacs in
