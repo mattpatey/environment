@@ -49,10 +49,13 @@ export PYTHONSTARTUP="$HOME/.pystartup"
 
 alias e=$EDITOR
 alias g='git'
+alias ga='git add'
 alias gc='git commit -av'
+alias gd='git diff --color=auto'
 alias gp='git pull'
 alias gpp='git push origin HEAD'
-alias ll='ls -alF'
+alias gs='git status'
+alias ll='ls -alFtr'
 alias la='ls -A'
 alias l='ls -CF'
 alias n='nosetests -s --nologcapture'

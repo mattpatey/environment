@@ -1,0 +1,7 @@
+\timing on
+\pset border 2
+\pset linestyle unicode
+\pset pager off
+\set ECHO queries
+\x on
+\set PROMPT1 '%033[1;33;40m%]%x%033[0m%][%`hostname` -> %/]%# '
