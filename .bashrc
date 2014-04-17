@@ -24,7 +24,7 @@ if [ -s "${SSH_AGENT_CACHE}" ]; then
     echo "Reusing existing ssh-agent"
     eval `cat "${SSH_AGENT_CACHE}"`
     # Check that agent still exists
-    kill -0 "${SSH_AGENT_PID}" 2>-
+    kill -0 "${SSH_AGENT_PID}"
 
     if [ $? -eq 1 ]; then
         echo "ssh-agent pid ${SSH_AGENT_PID} no longer running"
@@ -47,7 +47,6 @@ export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
 export PS1="\u@\h# "
 export PYTHONSTARTUP="$HOME/.pystartup"
 
-alias e=$EDITOR
 alias g='git'
 alias ga='git add'
 alias gc='git commit -av'
