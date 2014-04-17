@@ -1,3 +1,4 @@
+(setq make-backup-files nil)
 (setq custom-file "~/.emacs.d/custom.el")
 (setq site-elisp "~/.emacs.d/elisp")
 (add-to-list 'load-path site-elisp)
@@ -115,3 +116,4 @@ argument."
   (interactive)
   (set-mark-command t))
 (global-set-key (kbd "M-`") 'jump-to-mark)
+(put 'downcase-region 'disabled nil)
