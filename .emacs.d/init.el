@@ -36,6 +36,15 @@
 (when window-system
   (load-library "powerline"))
 
+;; Vagrantfiles open in Ruby mode automatically
+(require 'ruby-mode)
+(add-to-list 'auto-mode-alist '("Vagrantfile" . ruby-mode))
+
+;; YAML
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
 ;; Python
 (require 'python-mode)
 (autoload 'python-mode "python-mode" "Python editing mode." t)
@@ -61,6 +70,10 @@
 (setq auto-mode-alist
   (cons '("\\.text" . markdown-mode)
     auto-mode-alist))
+
+;; Puppet
+(autoload 'puppet-mode "puppet-mode" "Major mode for editing puppet manifests")
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 ;; ;; SuperCollider
 ;; (if (eq system-type 'darwin)

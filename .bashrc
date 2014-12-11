@@ -45,7 +45,6 @@ fi
 export EDITOR="emacs -Q"
 export PATH="$PATH:/usr/local/ruby/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$HOME/bin"
 export PS1="\u@\h# "
-export PYTHONSTARTUP="$HOME/.pystartup"
 
 alias g='git'
 alias ga='git add'
@@ -59,3 +58,12 @@ alias la='ls -A'
 alias l='ls -CF'
 alias n='nosetests -s --nologcapture'
 alias grep='grep --color=auto'
+alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+alias e='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+alias vs='vagrant ssh'
+alias vu='vagrant up'
+
+# export DOCKER_HOST=tcp://192.168.59.103:2376
+# export DOCKER_CERT_PATH=/Users/mlp/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=1
+$(boot2docker shellinit)
