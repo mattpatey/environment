@@ -1,0 +1,15 @@
+Config { font = "xft:inconsolata:size=10:antialias=true"
+       , bgColor = "#222222"
+       , fgColor = "grey"
+       , position = TopW L 95
+       , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red","-t","C: <total>%"] 10
+                    , Run Memory ["-t","M: <free>/<total>"] 10
+                    , Run Swap ["-t","S: <usedratio>%"] 10
+                    , Run Date "%d.%m.%Y %H:%M" "date" 10
+                    , Run Battery ["-t", "B: <left>%", "-L", "50", "-H", "75", "-h", "green", "-n", "yell", "-l", "red"] 10
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% } %date% { %cpu% | %memory% | %swap% | %battery%"
+       }
