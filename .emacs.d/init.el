@@ -12,8 +12,8 @@
  '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-;;;; Install packages in the package-list list. WIP: not sure this is
-;;;; something I really want to do.
+;;;; Install packages in the package-list list.
+;;;; WIP: not sure this is something I really want to do.
 ;;
 ;;(setq package-list '(markdown-mode))
 ;;(unless package-archive-contents
@@ -70,12 +70,6 @@
   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 )
-
-;; Bind file extensions to Emacs modes.
-;;
-;; (add-to-list 'auto-mode-alist
-;;   '("\\.md" . markdown-mode)
-;;)
 
 ;; Keybindings
 ;;
