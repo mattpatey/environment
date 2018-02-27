@@ -1,3 +1,7 @@
+;; I don't want backups.
+;;
+(setq make-backup-files nil)
+
 ;; Handle startup.
 ;;
 (setq package-enable-at-startup nil)
@@ -28,6 +32,9 @@
 (setq auto-save-default nil)
 (setq-default next-line-add-newlines nil)
 (setq-default require-final-newline t)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.j2\\'" . jinja2-mode))
+
 
 ;; Visuals.
 ;;
@@ -36,6 +43,30 @@
 (setq-default truncate-lines t)
 (setq use-file-dialog nil)
 (show-paren-mode)
+
+;; Customizing colors used in diff mode
+;;
+;; based on
+;; https://coderwall.com/p/lue1tg/changing-the-diff-mode-colors-in-emacs
+;;
+(defun custom-diff-colors ()
+  "update the colors for diff faces"
+
+  (set-face-attribute
+   'diff-added nil :foreground "green")
+  (set-face-attribute
+   'diff-added nil :background "nil")
+
+  (set-face-attribute
+   'diff-removed nil :foreground "red")
+  (set-face-attribute
+   'diff-removed nil :background "nil")
+
+  (set-face-attribute
+   'diff-changed nil :foreground "purple")
+  (set-face-attribute
+   'diff-changed nil :background "nil"))
+(eval-after-load "diff-mode" '(custom-diff-colors))
 
 ;; Tabs and spaces.
 ;;
@@ -52,6 +83,7 @@
 ;;
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq-default comint-prompt-read-only t)
+(setq electric-indent-mode nil)
 
 ;; Emacs behaviour in a windowed environment.
 ;;
@@ -63,9 +95,9 @@
   ;;
   ;; See
   ;; http://www.haskell.org/haskellwiki/Xmonad/Frequently_asked_questions#Emacs_mini-buffer_starts_at_wrong_size
-  (set-frame-font "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-  (add-to-list 'default-frame-alist
-    '(font . "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
+  ;; (set-frame-font "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+  ;; (add-to-list 'default-frame-alist
+  ;;   '(font . "-*-inconsolata-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1"))
   (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))

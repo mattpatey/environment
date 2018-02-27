@@ -1,7 +1,7 @@
 Config { font = "xft:inconsolata:size=10:antialias=true"
        , bgColor = "#222222"
        , fgColor = "grey"
-       , position = TopW L 95
+       , position = Top
        , commands = [ Run Cpu ["-L","3","-H","50","--normal","green","--high","red","-t","C: <total>%"] 10
                     , Run Memory ["-t","M: <free>/<total>"] 10
                     , Run Swap ["-t","S: <usedratio>%"] 10
@@ -12,4 +12,9 @@ Config { font = "xft:inconsolata:size=10:antialias=true"
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%StdinReader% } %date% { %cpu% | %memory% | %swap% | %battery%"
+       , lowerOnStart = True
+       , hideOnStart = False
+       , allDesktops = True
+       , persistent = True
+       , border = BottomB
        }

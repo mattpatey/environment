@@ -1,12 +1,27 @@
-# .xsession
-
+# Incorporate colour scheme and font settings.
+#
 xrdb -merge .Xresources
+
+# Start the screensaver daemon.
+#
 xscreensaver -no-splash &
-xsetroot -solid black
+
+# Set the background colour and image.
+#
 xgamma -gamma 0.9
-#syndaemon -d -t
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --height 19 --transparent true --alpha 0 --tint 0x22222222 &
-nm-applet --sm-disable &
-pasystray &
-feh --bg-scale /home/mlp/greeter-tux.png &
+xsetroot -solid black
+
+# Enable Emacs keybindings for GTK applications
+#
+/usr/bin/gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+/usr/bin/gnome-settings-daemon &
+
+# Turn caps lock into control (possibly unneeded)
+#
+setxkbmap -layout us -option ctrl:nocaps
+
+# Transparency!
+#
+xcompmgr &
+
 exec xmonad
