@@ -1,3 +1,5 @@
+/home/mlp/bin/autorandr.sh
+
 # Incorporate colour scheme and font settings.
 #
 xrdb -merge .Xresources
