@@ -1,0 +1,1 @@
+ACTION=="change", KERNEL=="card1", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/mlp/.Xauthority", RUN+="/home/mlp/bin/autorandr.sh"
