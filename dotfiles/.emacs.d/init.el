@@ -84,6 +84,7 @@
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq-default comint-prompt-read-only t)
 (setq electric-indent-mode nil)
+(menu-bar-mode -1)
 
 ;; Emacs behaviour in a windowed environment.
 ;;
