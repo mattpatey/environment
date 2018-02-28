@@ -6,3 +6,5 @@ xmonad-x86_64-linux
 auto-save-list
 custom.el
 elpa
+dotfiles/.work_env
+*%*
