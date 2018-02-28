@@ -18,7 +18,7 @@ mlp_borderWidth = 2
 mlp_focusedBorderColor = "#ff3"
 mlp_modMask = mod4Mask
 mlp_normalBorderColor = "#555555"
-scratchpad_terminal = "urxvt -bg 'rgba:0000/0000/0000/c800' -fg '#ffff00' -b 20"
+scratchpad_terminal = "urxvt -bg 'rgba:0000/0000/0000/ee00' -fg '#ffff00' -b 20"
 mlp_terminal = "urxvt"
 manageScratchPad :: ManageHook
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
